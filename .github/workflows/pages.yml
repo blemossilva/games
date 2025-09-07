@@ -22,6 +22,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Generate Version Info
+        run: |
+          GIT_HASH=$(git rev-parse --short HEAD)
+          echo "const APP_VERSION = '$GIT_HASH';" > js/version.js
+          echo "✅ Version file generated (js/version.js)"
+
       - name: Validate JSON Catalog
         run: |
           if ! command -v jq &> /dev/null; then

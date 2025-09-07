@@ -9,6 +9,7 @@ const TAGS_URL = 'data/tags.json';
 let allGames = [];
 
 async function main() {
+  document.getElementById('version').textContent = window.APP_VERSION || 'dev';
   setupThemeToggle();
   setupAnnouncer();
 

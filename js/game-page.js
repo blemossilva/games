@@ -5,6 +5,7 @@ import { setupThemeToggle } from './theme.js';
 const GAMES_URL = 'data/games.index.json';
 
 async function main() {
+  document.getElementById('version').textContent = window.APP_VERSION || 'dev';
   setupThemeToggle();
   const gameId = getQueryParam('id');
   if (!gameId) {
