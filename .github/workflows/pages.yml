@@ -1,0 +1,67 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate JSON Catalog
+        run: |
+          if ! command -v jq &> /dev/null; then
+            sudo apt-get update && sudo apt-get install -y jq
+          fi
+          # Valida se é JSON válido e se todos os items têm um '''id''' e '''title'''
+          jq -e '.[] | has("id") and has("title")' < data/games.index.json > /dev/null
+          echo "✅ Catálogo de jogos (games.index.json) é válido."
+
+      - name: Generate sitemap.xml
+        run: |
+          # URL base do site (ajustar se usar domínio customizado)
+          BASE_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+
+          # Start sitemap
+          echo '''<?xml version="1.0" encoding="UTF-8"?>''' > sitemap.xml
+          echo '''<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">''' >> sitemap.xml
+
+          # Add static pages
+          echo "  <url><loc>${BASE_URL}/</loc></url>" >> sitemap.xml
+          echo "  <url><loc>${BASE_URL}/index.html</loc></url>" >> sitemap.xml
+
+          # Add game pages from JSON catalog
+          jq -r '.[] | .id' < data/games.index.json | while read id; do
+            echo "  <url><loc>${BASE_URL}/jogo.html?id=$id</loc></url>" >> sitemap.xml
+          done
+
+          # End sitemap
+          echo '''</urlset>''' >> sitemap.xml
+          echo "✅ Sitemap.xml gerado com sucesso."
+          cat sitemap.xml
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

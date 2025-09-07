@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; media-src 'self' https:; frame-src 'self' *; script-src 'self'; style-src 'self' 'unsafe-inline';">
+  <title>A Carregar Jogo...</title>
+  
+  <link rel="icon" href="/assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/theme.css">
+
+  <script src="/js/game-page.js" type="module" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <h1><a href="/">🕹️ Portal de Jogos</a></h1>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+      <span class="icon moon">🌙</span>
+      <span class="icon sun">☀️</span>
+    </button>
+  </header>
+
+  <main class="container">
+    <h2 id="game-title"></h2>
+    <p id="game-author"></p>
+
+    <div id="game-container" class="game-container">
+      <!-- O iframe do jogo será inserido aqui -->
+    </div>
+
+    <div class="game-controls">
+      <button id="btn-play">▶️ Jogar</button>
+      <button id="btn-pause">⏸️ Pausa</button>
+      <button id="btn-reset">🔄 Reiniciar</button>
+      <div id="high-score" class="score-display">Recorde: 0</div>
+    </div>
+
+    <article class="game-meta">
+      <h3>Sobre o Jogo</h3>
+      <p id="game-description"></p>
+      <p id="game-instructions"></p>
+    </article>
+  </main>
+
+  <footer class="main-footer">
+    <p>&copy; 2025 Portal de Jogos. Licença MIT.</p>
+  </footer>
+</body>
+</html>

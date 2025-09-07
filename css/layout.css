@@ -1,0 +1,213 @@
+/* Layout Geral */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: calc(var(--spacing-unit) * 3);
+}
+
+.main-header, .main-footer {
+  padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+  background-color: var(--color-card-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-footer {
+  text-align: center;
+  margin-top: auto;
+  border-top: 1px solid var(--color-border);
+  border-bottom: none;
+  font-size: 0.9em;
+  color: var(--color-secondary);
+}
+
+/* Filtros e Busca */
+.filters-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing-unit) * 2);
+  margin-bottom: calc(var(--spacing-unit) * 3);
+}
+
+.filters-toolbar input, .filters-toolbar select {
+  padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background-color: var(--color-card-bg);
+  color: var(--color-text);
+  font-size: 1em;
+}
+
+.filters-toolbar input[type="search"] {
+  flex-grow: 1;
+  min-width: 200px;
+}
+
+/* Grelha de Jogos */
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: calc(var(--spacing-unit) * 3);
+}
+
+.game-card {
+  background-color: var(--color-card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.game-card__thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background-color: #333;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.game-card__content {
+  padding: calc(var(--spacing-unit) * 2);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-card__title {
+  font-size: 1.25rem;
+  margin-bottom: var(--spacing-unit);
+  color: var(--color-text);
+}
+
+.game-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-unit);
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background-color: var(--color-secondary);
+  color: white;
+  text-transform: capitalize;
+}
+
+.badge--difficulty-fácil { background-color: #28a745; }
+.badge--difficulty-médio { background-color: #ffc107; color: #1a1a1a; }
+.badge--difficulty-difícil { background-color: #dc3545; }
+.badge--genre-arcade { background-color: #17a2b8; }
+.badge--offline { background-color: var(--color-primary); }
+
+.game-card__cta {
+  margin-top: auto;
+  display: block;
+  width: 100%;
+  padding: calc(var(--spacing-unit) * 1.5);
+  background-color: var(--color-primary);
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.game-card__cta:hover {
+  background-color: #0056b3;
+  text-decoration: none;
+}
+
+.dark-mode .game-card__cta:hover {
+  background-color: #5faaff;
+}
+
+/* Página do Jogo */
+.game-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.game-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.game-meta {
+  margin-top: calc(var(--spacing-unit) * 3);
+}
+
+.screenshots {
+  margin-top: calc(var(--spacing-unit) * 3);
+}
+
+.screenshots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: calc(var(--spacing-unit) * 2);
+}
+
+.screenshots-grid img {
+  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s ease;
+}
+
+.screenshots-grid img:hover {
+  transform: scale(1.05);
+}
+
+.game-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-unit);
+  margin: calc(var(--spacing-unit) * 2) 0;
+}
+
+.game-controls button, .game-controls .score-display {
+  padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card-bg);
+  color: var(--color-text);
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.score-display {
+  cursor: default;
+}
+
+.fps-meter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-family: monospace;
+  z-index: 100;
+  pointer-events: none;
+}

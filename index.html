@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; media-src 'self' https:; frame-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';">
+  <title>Portal de Mini-Jogos</title>
+  <meta name="description" content="Um catálogo de mini-jogos em JavaScript para jogar diretamente no browser.">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-username.github.io/your-repo/">
+  <meta property="og:title" content="Portal de Mini-Jogos">
+  <meta property="og:description" content="Descubra e jogue mini-jogos clássicos e novos.">
+  <meta property="og:image" content="https://your-username.github.io/your-repo/assets/icons/apple-touch-icon.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://your-username.github.io/your-repo/">
+  <meta property="twitter:title" content="Portal de Mini-Jogos">
+  <meta property="twitter:description" content="Descubra e jogue mini-jogos clássicos e novos.">
+  <meta property="twitter:image" content="https://your-username.github.io/your-repo/assets/icons/apple-touch-icon.png">
+
+  <link rel="icon" href="/assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/pwa/manifest.json">
+
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/layout.css">
+  <link rel="stylesheet" href="/css/theme.css">
+
+  <script src="/js/app.js" type="module" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <h1><a href="/">🕹️ Portal de Jogos</a></h1>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+      <span class="icon moon">🌙</span>
+      <span class="icon sun">☀️</span>
+    </button>
+  </header>
+
+  <main class="container">
+    <section class="filters-toolbar" aria-label="Filtros de jogos">
+      <input type="search" id="search-query" placeholder="Procurar jogos por nome...">
+      <select id="filter-genre" aria-label="Filtrar por género">
+        <option value="all">Todos os Géneros</option>
+      </select>
+      <select id="filter-difficulty" aria-label="Filtrar por dificuldade">
+        <option value="all">Toda a Dificuldade</option>
+      </select>
+      <select id="filter-category" aria-label="Filtrar por categoria">
+        <option value="all">Todas as Categorias</option>
+      </select>
+      <select id="filter-offline" aria-label="Filtrar por disponibilidade offline">
+        <option value="all">Online & Offline</option>
+        <option value="true">Apenas Offline</option>
+        <option value="false">Apenas Online</option>
+      </select>
+    </section>
+
+    <section id="games-grid-section" aria-live="polite">
+      <div id="games-grid" class="games-grid">
+        <!-- Os cartões dos jogos serão inseridos aqui pelo JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <p>&copy; 2025 Portal de Jogos. Criado com Gemini. Licença MIT.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embed: 2048</title>
+  <style>
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: sans-serif; background-color: #121212; color: #f1f1f1; }
+    .embed-wrapper { display: flex; flex-direction: column; height: 100%; }
+    .embed-iframe { flex-grow: 1; border: none; }
+    .embed-attribution { padding: 8px; text-align: center; font-size: 12px; background-color: #000; }
+    .embed-attribution a { color: #3793ff; }
+  </style>
+</head>
+<body>
+  <div class="embed-wrapper">
+    <iframe
+      class="embed-iframe"
+      src="https://play2048.co/"
+      sandbox="allow-scripts allow-same-origin"
+      referrerpolicy="no-referrer"
+      loading="lazy"
+      title="Jogo 2048">
+    </iframe>
+    <div class="embed-attribution">
+      Jogo "2048" por Gabriele Cirulli, licenciado sob MIT.
+      <a href="https://play2048.co/" target="_blank" rel="noopener noreferrer">Jogar no site original</a>.
+    </div>
+  </div>
+</body>
+</html>

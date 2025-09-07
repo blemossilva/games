@@ -1,0 +1,23 @@
+{
+  "genres": [
+    {"value": "arcade", "label": "Arcade"},
+    {"value": "retro", "label": "Retro"},
+    {"value": "puzzle", "label": "Puzzle"},
+    {"value": "shooter", "label": "Shooter"},
+    {"value": "casual", "label": "Casual"},
+    {"value": "plataforma", "label": "Plataforma"}
+  ],
+  "difficulties": [
+    {"value": "fácil", "label": "Fácil"},
+    {"value": "médio", "label": "Médio"},
+    {"value": "difícil", "label": "Difícil"}
+  ],
+  "categories": [
+    {"value": "retro", "label": "Retro"},
+    {"value": "arcade", "label": "Arcade"},
+    {"value": "casual", "label": "Casual"}
+  ],
+  "tags": [
+    "singleplayer", "multiplayer-local", "keyboard", "touch", "estratégia", "aventura"
+  ]
+}
