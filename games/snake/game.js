@@ -54,7 +54,7 @@ function gameLoop() {
 
     // Apple collision
     if (head.x === apple.x && head.y === apple.y) {
-        score++;
+        score = score + 10;
         placeApple();
     } else {
         snake.pop();
