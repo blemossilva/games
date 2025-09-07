@@ -15,7 +15,7 @@ function resizeCanvas() {
 
 function resetGame() {
     snake = [{ x: 10, y: 10 }];
-    apple = { x: 1, y: 1 };
+    apple = { x: 1, y: 10 };
     velocity = { x: 0, y: 0 };
     score = 0;
     playing = false;
