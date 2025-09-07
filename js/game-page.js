@@ -2,7 +2,7 @@ import { getQueryParam } from './utils.js';
 import { getScore, saveScore } from './score.js';
 import { setupThemeToggle } from './theme.js';
 
-const GAMES_URL = '/data/games.index.json';
+const GAMES_URL = 'data/games.index.json';
 
 async function main() {
   setupThemeToggle();

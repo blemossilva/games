@@ -3,8 +3,8 @@ import { setupFilters } from './filters.js';
 import { setupThemeToggle } from './theme.js';
 import { setupAnnouncer } from './a11y.js';
 
-const GAMES_URL = '/data/games.index.json';
-const TAGS_URL = '/data/tags.json';
+const GAMES_URL = 'data/games.index.json';
+const TAGS_URL = 'data/tags.json';
 
 let allGames = [];
 
