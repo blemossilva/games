@@ -67,8 +67,8 @@
         const gamesDirIndex = pathSegments.indexOf('games');
         
         if (gamesDirIndex !== -1) {
-            // Go back to games portal: ../index.html
-            const backPath = '../index.html';
+            // Go back to games portal: ../../index.html (from games/[game]/ to games/)
+            const backPath = '../../index.html';
             window.location.href = backPath;
         } else {
             // Fallback
