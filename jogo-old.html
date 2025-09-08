@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; media-src 'self' https:; frame-src 'self' *; script-src 'self'; style-src 'self' 'unsafe-inline';">
+  <title>Retro-games dev - Carregando Jogo...</title>
+  
+  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/theme.css">
+
+  <script src="js/version.js" defer></script>
+  <script src="js/game-page.js" type="module" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="logo">
+      <img src="assets/icons/retro-games-dev-logo.png" alt="Retro-games dev Logo" />
+      <h1><a href="index.html">Retro-games dev</a></h1>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+      <span class="icon">🎨</span>
+    </button>
+  </header>
+
+  <main class="container">
+    <h2 id="game-title"></h2>
+    <p id="game-author"></p>
+
+    <div id="game-container" class="game-container">
+      <!-- O iframe do jogo será inserido aqui -->
+    </div>
+
+    <div class="game-controls">
+      <button id="btn-play" class="btn-green">▶️ Jogar</button>
+      <button id="btn-pause" class="btn-blue">⏸️ Pausa</button>
+      <button id="btn-reset" class="btn-red">🔄 Reiniciar</button>
+      <div id="high-score" class="score-display">🏆 Recorde: 0</div>
+    </div>
+
+    <article class="game-meta">
+      <h3>Sobre o Jogo</h3>
+      <p id="game-description"></p>
+      <p id="game-instructions"></p>
+    </article>
+  </main>
+
+  <footer class="main-footer">
+    <p>
+      <strong>Retro-games dev</strong> <span id="version"></span> - 
+      <span style="color: var(--pop-yellow);">Pop-Art Gaming Experience</span>
+    </p>
+  </footer>
+</body>
+</html>

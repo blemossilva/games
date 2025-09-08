@@ -4,21 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; media-src 'self' https:; frame-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline';">
-  <title>Portal de Mini-Jogos v1.0.1</title>
-  <meta name="description" content="Um catálogo de mini-jogos em JavaScript para jogar diretamente no browser.">
+  <title>Retro-games dev - Portal de Jogos Pop-Art</title>
+  <meta name="description" content="Descubra jogos clássicos com estilo pop-art vibrante e colorido. Retro-games dev oferece experiências de jogo únicas.">
+  <meta name="keywords" content="retro games, pop art, jogos coloridos, arcade, browser games, geometric design">
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://your-username.github.io/your-repo/">
-  <meta property="og:title" content="Portal de Mini-Jogos">
-  <meta property="og:description" content="Descubra e jogue mini-jogos clássicos e novos.">
+  <meta property="og:title" content="Retro-games dev - Portal Pop-Art">
+  <meta property="og:description" content="Jogos clássicos com design pop-art vibrante. Experiência de jogo única e colorida.">
   <meta property="og:image" content="https://your-username.github.io/your-repo/assets/icons/apple-touch-icon.png">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://your-username.github.io/your-repo/">
-  <meta property="twitter:title" content="Portal de Mini-Jogos">
-  <meta property="twitter:description" content="Descubra e jogue mini-jogos clássicos e novos.">
+  <meta property="twitter:title" content="Retro-games dev - Portal Pop-Art">
+  <meta property="twitter:description" content="Jogos clássicos com design pop-art vibrante. Experiência de jogo única e colorida.">
   <meta property="twitter:image" content="https://your-username.github.io/your-repo/assets/icons/apple-touch-icon.png">
 
   <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
@@ -35,14 +36,23 @@
 </head>
 <body>
   <header class="main-header">
-    <h1><a href="index.html">🕹️ Portal de Jogos</a></h1>
+    <div class="logo">
+      <img src="assets/icons/retro-games-dev-logo.png" alt="Retro-games dev Logo" />
+      <h1><a href="index.html">Retro-games dev</a></h1>
+    </div>
     <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
-      <span class="icon">☀️</span>
+      <span class="icon">🎨</span>
     </button>
   </header>
 
   <main class="container">
-    <section class="filters-toolbar" aria-label="Filtros de jogos">
+    <!-- Mobile Filter Toggle -->
+    <button id="mobile-filter-toggle" class="mobile-filter-toggle" aria-label="Mostrar/Ocultar Filtros">
+      <span class="hamburger-icon">⚙️</span>
+      <span class="filter-text">Filtros</span>
+    </button>
+    
+    <section class="filters-toolbar" id="filters-toolbar" aria-label="Filtros de jogos">
       <input type="search" id="search-query" placeholder="Procurar jogos por nome...">
       <select id="filter-genre" aria-label="Filtrar por género">
         <option value="all">Todos os Géneros</option>
@@ -68,7 +78,10 @@
   </main>
 
   <footer class="main-footer">
-    <p>Retro-games <span id="version"></span></p>
+    <p>
+      <strong>Retro-games dev</strong> <span id="version"></span> - 
+      <span style="color: var(--pop-yellow);">Pop-Art Gaming Experience</span>
+    </p>
   </footer>
 </body>
 </html>

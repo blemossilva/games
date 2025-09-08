@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(python:*)",
-      "Bash(jq:*)"
+      "Bash(jq:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,3 +1,6 @@
+/* Importar Google Fonts - Pop Art Typography */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+
 /* Reset e Normalização Básica */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -5,152 +8,257 @@
   padding: 0;
 }
 
-/* Variáveis CSS */
 :root {
-  --color-text: #1a1a1a;
-  --color-background: #f8fafc;
-  --color-primary: #3b82f6;
-  --color-secondary: #64748b;
-  --color-accent: #10b981;
-  --color-card-bg: #ffffff;
-  --color-border: #e2e8f0;
-  --color-hover: #f1f5f9;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --border-radius: 0.75rem;
-  --border-radius-sm: 0.5rem;
-  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
+  /* Sistema de Spacing */
   --spacing-unit: 8px;
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Pop-Art Core Colors - From Logo */
+  --pop-yellow: #F2C500;
+  --pop-blue: #0072CE;
+  --pop-red: #D62828;
+  --pop-green: #2A9D8F;
+  --pop-black: #000000;
+  --pop-white: #FFFFFF;
+  
+  /* Pop-Art Derived Colors (Light Mode) */
+  --yellow-light: #FFF3B8;
+  --yellow-dark: #CC9F00;
+  --blue-light: #B8DCFF;
+  --blue-dark: #0056A3;
+  --red-light: #FFB8C1;
+  --red-dark: #A81E1E;
+  --green-light: #B8F2E8;
+  --green-dark: #1F7A6B;
+  
+  /* Pop-Art Theme Colors (Light Mode) */
+  --color-primary: var(--pop-blue);
+  --color-secondary: var(--pop-green);
+  --color-accent: var(--pop-yellow);
+  --color-danger: var(--pop-red);
+  
+  /* Background & Text (Light Mode) */
+  --color-text: var(--pop-black);
+  --color-text-muted: #333333;
+  --color-text-secondary: var(--pop-white);
+  --color-background: #FAFAFA;
+  --color-card-bg: var(--pop-white);
+  --color-border: #E0E0E0;
+  --color-outline: var(--pop-black);
+  
+  /* Pop-Art Shadows & Effects */
+  --shadow: 4px 4px 0px var(--pop-black);
+  --shadow-lg: 8px 8px 0px var(--pop-black);
+  --shadow-hover: 6px 6px 0px var(--pop-black);
+  --glow-yellow: 0 0 20px var(--pop-yellow);
+  --glow-blue: 0 0 20px var(--pop-blue);
+  --glow-red: 0 0 20px var(--pop-red);
+  --glow-green: 0 0 20px var(--pop-green);
+  
+  /* Border Radius - Geometric */
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --border-radius-lg: 16px;
+  
+  /* Transitions - Snappy Pop-Art */
+  --transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* Typography - Pop Art Fonts */
+  --font-family-heading: 'Bebas Neue', 'Poppins', sans-serif;
+  --font-family-body: 'Inter', 'Roboto', sans-serif;
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
+  
+  /* Outline Stroke - Lighter for better readability */
+  --text-stroke: -1px -1px 0 var(--pop-black), 1px -1px 0 var(--pop-black), -1px 1px 0 var(--pop-black), 1px 1px 0 var(--pop-black);
 }
 
-/* Tema Escuro */
-.dark-mode {
-  --color-text: #f1f5f9;
-  --color-background: #0f172a;
-  --color-primary: #60a5fa;
-  --color-secondary: #94a3b8;
-  --color-accent: #34d399;
-  --color-card-bg: #1e293b;
-  --color-border: #334155;
-  --color-hover: #475569;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
-}
-
-/* Tema Oceano */
-.ocean-theme {
-  --color-text: #0f172a;
-  --color-background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
-  --color-primary: #0891b2;
-  --color-secondary: #0369a1;
-  --color-accent: #06b6d4;
-  --color-card-bg: rgba(255, 255, 255, 0.9);
-  --color-border: #7dd3fc;
-  --color-hover: rgba(125, 211, 252, 0.2);
-  --shadow: 0 4px 15px rgba(14, 165, 233, 0.15);
-  --shadow-lg: 0 10px 25px rgba(14, 165, 233, 0.2);
-}
-
-/* Tema Pôr do Sol */
-.sunset-theme {
-  --color-text: #1a1a1a;
-  --color-background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fecaca 100%);
-  --color-primary: #ea580c;
-  --color-secondary: #dc2626;
-  --color-accent: #f59e0b;
-  --color-card-bg: rgba(255, 255, 255, 0.8);
-  --color-border: #fed7aa;
-  --color-hover: rgba(251, 215, 170, 0.3);
-  --shadow: 0 4px 15px rgba(234, 88, 12, 0.2);
-  --shadow-lg: 0 10px 25px rgba(234, 88, 12, 0.25);
-}
-
-/* Tema Floresta */
-.forest-theme {
-  --color-text: #0f172a;
-  --color-background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #a7f3d0 100%);
-  --color-primary: #059669;
-  --color-secondary: #047857;
-  --color-accent: #10b981;
-  --color-card-bg: rgba(255, 255, 255, 0.9);
-  --color-border: #86efac;
-  --color-hover: rgba(134, 239, 172, 0.3);
-  --shadow: 0 4px 15px rgba(5, 150, 105, 0.15);
-  --shadow-lg: 0 10px 25px rgba(5, 150, 105, 0.2);
-}
-
-/* Tema Galáxia */
-.galaxy-theme {
-  --color-text: #e2e8f0;
-  --color-background: radial-gradient(circle at 25% 25%, #1e1b4b 0%, #0f0f23 50%, #000000 100%);
-  --color-primary: #8b5cf6;
-  --color-secondary: #a855f7;
-  --color-accent: #c084fc;
-  --color-card-bg: rgba(30, 27, 75, 0.8);
-  --color-border: #5b21b6;
-  --color-hover: rgba(139, 92, 246, 0.2);
-  --shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-  --shadow-lg: 0 10px 25px rgba(139, 92, 246, 0.4);
-}
-
-/* Tema Neon */
-.neon-theme {
-  --color-text: #0a0a0a;
-  --color-background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
-  --color-primary: #00ff41;
-  --color-secondary: #ff0080;
-  --color-accent: #00d4ff;
-  --color-card-bg: rgba(0, 0, 0, 0.8);
-  --color-border: #00ff41;
-  --color-hover: rgba(0, 255, 65, 0.1);
-  --shadow: 0 0 20px rgba(0, 255, 65, 0.3);
-  --shadow-lg: 0 0 30px rgba(0, 255, 65, 0.5);
-}
-
-.neon-theme {
-  --color-text: #e2e8f0;
-}
-
-/* Tema Cerejeira */
-.cherry-theme {
-  --color-text: #1a1a1a;
-  --color-background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
-  --color-primary: #ec4899;
-  --color-secondary: #be185d;
-  --color-accent: #f472b6;
-  --color-card-bg: rgba(255, 255, 255, 0.9);
-  --color-border: #f9a8d4;
-  --color-hover: rgba(249, 168, 212, 0.3);
-  --shadow: 0 4px 15px rgba(236, 72, 153, 0.15);
-  --shadow-lg: 0 10px 25px rgba(236, 72, 153, 0.2);
-}
-
-html, body {
-  font-family: var(--font-family-base);
-  background: var(--color-background);
-  color: var(--color-text);
-  line-height: 1.6;
-  transition: var(--transition);
+/* Dark Theme - Neon Pop Art */
+[data-theme="dark"], .dark-mode {
+  /* Neon Pop-Art Colors */
+  --pop-yellow: #FFE500;
+  --pop-blue: #00A8FF;
+  --pop-red: #FF3838;
+  --pop-green: #00FFB3;
+  
+  /* Dark Mode Backgrounds */
+  --color-background: #121212;
+  --color-card-bg: #1E1E1E;
+  --color-border: #333333;
+  --color-text: var(--pop-white);
+  --color-text-muted: #CCCCCC;
+  --color-text-secondary: var(--pop-black);
+  
+  /* Neon Glows for Dark Mode */
+  --glow-yellow: 0 0 25px var(--pop-yellow), 0 0 35px var(--pop-yellow);
+  --glow-blue: 0 0 25px var(--pop-blue), 0 0 35px var(--pop-blue);
+  --glow-red: 0 0 25px var(--pop-red), 0 0 35px var(--pop-red);
+  --glow-green: 0 0 25px var(--pop-green), 0 0 35px var(--pop-green);
+  
+  /* Dark Mode Shadows */
+  --shadow: 4px 4px 0px rgba(255, 255, 255, 0.1);
+  --shadow-lg: 8px 8px 0px rgba(255, 255, 255, 0.1);
+  --shadow-hover: 6px 6px 0px rgba(255, 255, 255, 0.1);
 }
 
 body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  background-image: radial-gradient(circle at 20% 80%, rgba(242, 197, 0, 0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(0, 114, 206, 0.05) 0%, transparent 50%);
+  transition: var(--transition);
+  position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Halftone Pattern Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
 }
 
 main {
   flex: 1;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 calc(var(--spacing-unit) * 2) 0;
+  font-family: var(--font-family-heading);
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-shadow: var(--text-stroke);
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+}
+
 a {
   color: var(--color-primary);
   text-decoration: none;
+  transition: var(--transition);
+  font-weight: 500;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--color-accent);
+  text-shadow: var(--glow-yellow);
+  transform: translateY(-1px);
+}
+
+button {
+  cursor: pointer;
+  border: 3px solid var(--color-outline);
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-family-heading);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: var(--transition-bounce);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-unit);
+  box-shadow: var(--shadow);
+  background: var(--pop-yellow);
+  color: var(--pop-black);
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  transform: translateY(-2px) translateX(-2px);
+  box-shadow: var(--shadow-hover);
+  background: var(--yellow-light);
+}
+
+button:active {
+  transform: translateY(0) translateX(0);
+  box-shadow: 2px 2px 0px var(--pop-black);
+}
+
+/* Button Variants */
+button.btn-blue {
+  background: var(--pop-blue);
+  color: var(--pop-white);
+}
+
+button.btn-blue:hover {
+  background: var(--blue-light);
+  color: var(--pop-black);
+}
+
+button.btn-red {
+  background: var(--pop-red);
+  color: var(--pop-white);
+}
+
+button.btn-red:hover {
+  background: var(--red-light);
+  color: var(--pop-black);
+}
+
+button.btn-green {
+  background: var(--pop-green);
+  color: var(--pop-white);
+}
+
+button.btn-green:hover {
+  background: var(--green-light);
+  color: var(--pop-black);
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: calc(var(--spacing-unit) * 1.5);
+  border: 3px solid var(--color-outline);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--color-card-bg);
+  color: var(--color-text);
+  font-family: var(--font-family-body);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-hover), var(--glow-blue);
+  transform: translateY(-1px) translateX(-1px);
+}
+
+input:hover, select:hover, textarea:hover {
+  transform: translateY(-1px) translateX(-1px);
+  box-shadow: var(--shadow-hover);
 }
 
 img {
@@ -159,11 +267,58 @@ img {
   display: block;
 }
 
+/* Pop-Art Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border: 2px solid var(--color-outline);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pop-yellow);
+  border: 2px solid var(--color-outline);
+  border-radius: var(--border-radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pop-blue);
+  box-shadow: var(--glow-blue);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-background);
+  border: 2px solid var(--color-outline);
+}
+
 /* Acessibilidade */
 :focus-visible {
   outline: 3px solid var(--color-primary);
   outline-offset: 2px;
   border-radius: 4px;
+  box-shadow: var(--glow-blue);
+}
+
+/* Mobile Typography Improvements */
+@media (max-width: 768px) {
+  h1, h2, h3, h4, h5, h6 {
+    text-shadow: -1px -1px 0 var(--pop-black), 1px -1px 0 var(--pop-black), -1px 1px 0 var(--pop-black), 1px 1px 0 var(--pop-black), 0 0 3px rgba(0,0,0,0.3);
+    line-height: 1.3;
+  }
+  
+  .game-card__title {
+    text-shadow: -1px -1px 0 var(--pop-black), 1px -1px 0 var(--pop-black), -1px 1px 0 var(--pop-black), 1px 1px 0 var(--pop-black), 0 0 2px rgba(0,0,0,0.2);
+  }
+}
+
+@media (max-width: 480px) {
+  h1, h2, h3, h4, h5, h6 {
+    text-shadow: 0 0 4px rgba(0,0,0,0.5);
+    font-weight: 800;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -172,5 +327,9 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  
+  button:hover, a:hover, input:hover {
+    transform: none !important;
   }
 }

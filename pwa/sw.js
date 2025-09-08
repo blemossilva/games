@@ -1,14 +1,20 @@
 // sw.js - Service Worker (Opcional)
-const CACHE_NAME = 'game-portal-cache-v1';
+const CACHE_NAME = 'retro-games-dev-v2';
 const URLS_TO_CACHE = [
   '/',
   '/index.html',
-  '/jogo.html',
   '/css/base.css',
   '/css/layout.css',
   '/css/theme.css',
   '/js/app.js',
   '/js/ui.js',
+  '/games/snake/index.html',
+  '/games/pong/index.html',
+  '/games/2048/index.html',
+  '/games/tetris/index.html',
+  '/games/flappy-bird/index.html',
+  '/games/space-invaders/index.html',
+  '/games/platformer/index.html',
   // Adicionar outros assets essenciais do portal
 ];
 

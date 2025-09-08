@@ -29,7 +29,7 @@ function createGameCard(game) {
         <span class="badge badge--difficulty-${game.difficulty}">${game.difficulty}</span>
         ${game.offline ? '<span class="badge badge--offline">Offline</span>' : ''}
       </div>
-      <a href="jogo.html?id=${game.id}" class="game-card__cta">Jogar</a>
+      <a href="${game.path}" class="game-card__cta">Jogar</a>
     </div>
   `;
   return card;

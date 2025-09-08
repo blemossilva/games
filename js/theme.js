@@ -2,48 +2,28 @@ import { setItem, getItem } from './storage.js';
 
 const THEME_KEY = 'theme_preference';
 
+// Pop-Art Themes inspired by the logo
 const themes = [
-  { id: 'light', name: '☀️ Claro', icon: '☀️' },
-  { id: 'dark', name: '🌙 Escuro', icon: '🌙' },
-  { id: 'ocean', name: '🌊 Oceano', icon: '🌊' },
-  { id: 'sunset', name: '🌅 Pôr do Sol', icon: '🌅' },
-  { id: 'forest', name: '🌲 Floresta', icon: '🌲' },
-  { id: 'galaxy', name: '🌌 Galáxia', icon: '🌌' },
-  { id: 'neon', name: '💎 Neon', icon: '💎' },
-  { id: 'cherry', name: '🌸 Cerejeira', icon: '🌸' }
+  { id: 'light', name: '☀️ Pop Art Claro', icon: '🎨' },
+  { id: 'dark', name: '🌙 Neon Escuro', icon: '⚡' }
 ];
 
 let currentThemeIndex = 0;
 
 function applyTheme(themeId) {
   // Remove todas as classes de tema
-  document.documentElement.classList.remove('dark-mode', 'ocean-theme', 'sunset-theme', 'forest-theme', 'galaxy-theme', 'neon-theme', 'cherry-theme');
+  document.documentElement.classList.remove('dark-mode');
+  document.documentElement.removeAttribute('data-theme');
   
   // Aplica o tema apropriado
   switch (themeId) {
     case 'dark':
       document.documentElement.classList.add('dark-mode');
-      break;
-    case 'ocean':
-      document.documentElement.classList.add('ocean-theme');
-      break;
-    case 'sunset':
-      document.documentElement.classList.add('sunset-theme');
-      break;
-    case 'forest':
-      document.documentElement.classList.add('forest-theme');
-      break;
-    case 'galaxy':
-      document.documentElement.classList.add('galaxy-theme');
-      break;
-    case 'neon':
-      document.documentElement.classList.add('neon-theme');
-      break;
-    case 'cherry':
-      document.documentElement.classList.add('cherry-theme');
+      document.documentElement.setAttribute('data-theme', 'dark');
       break;
     default:
-      // light theme (sem classes adicionais)
+      // light theme (pop-art padrão)
+      document.documentElement.setAttribute('data-theme', 'light');
       break;
   }
   
@@ -58,7 +38,7 @@ function updateThemeToggleIcon(themeId) {
   const theme = themes.find(t => t.id === themeId);
   if (theme) {
     toggle.innerHTML = `<span class="icon">${theme.icon}</span>`;
-    toggle.setAttribute('aria-label', `Tema atual: ${theme.name}. Clique para alterar tema.`);
+    toggle.setAttribute('aria-label', `Tema atual: ${theme.name}. Clique para alternar tema.`);
   }
 }
 
@@ -66,11 +46,50 @@ export function setupThemeToggle() {
   const toggle = document.getElementById('theme-toggle');
   if (!toggle) return;
 
+  // Style the toggle button with pop-art design
+  toggle.style.cssText = `
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--color-outline);
+    border-radius: var(--border-radius);
+    background: var(--pop-yellow);
+    color: var(--pop-black);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition-bounce);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  `;
+
   toggle.addEventListener('click', () => {
     currentThemeIndex = (currentThemeIndex + 1) % themes.length;
     const newTheme = themes[currentThemeIndex].id;
     setItem(THEME_KEY, newTheme);
     applyTheme(newTheme);
+    
+    // Pop-art click animation
+    toggle.style.transform = 'translateY(2px) translateX(2px)';
+    toggle.style.boxShadow = '2px 2px 0px var(--color-outline)';
+    setTimeout(() => {
+      toggle.style.transform = '';
+      toggle.style.boxShadow = 'var(--shadow)';
+    }, 150);
+  });
+
+  toggle.addEventListener('mouseenter', () => {
+    toggle.style.transform = 'translateY(-2px) translateX(-2px)';
+    toggle.style.boxShadow = 'var(--shadow-hover), var(--glow-yellow)';
+    toggle.style.background = 'var(--yellow-light)';
+  });
+
+  toggle.addEventListener('mouseleave', () => {
+    toggle.style.transform = '';
+    toggle.style.boxShadow = 'var(--shadow)';
+    toggle.style.background = 'var(--pop-yellow)';
   });
 
   // Aplicar tema inicial
