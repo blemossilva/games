@@ -1,23 +1,65 @@
 .theme-toggle {
-  background: none;
-  border: 1px solid var(--color-border);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  background: var(--color-card-bg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--border-radius);
+  width: 48px;
+  height: 48px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-text);
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  background: var(--color-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
+}
+
+.theme-toggle:active {
+  transform: translateY(0);
+  transition-duration: 0.1s;
 }
 
 .theme-toggle .icon {
   font-size: 24px;
   line-height: 1;
+  transition: var(--transition);
 }
 
-.theme-toggle .moon { display: block; }
-.theme-toggle .sun { display: none; }
+/* Efeitos especiais para temas específicos */
+.neon-theme .theme-toggle {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3), var(--shadow);
+}
 
-.dark-mode .theme-toggle .moon { display: none; }
-.dark-mode .theme-toggle .sun { display: block; }
+.neon-theme .theme-toggle:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.5), var(--shadow-lg);
+  text-shadow: 0 0 10px currentColor;
+}
+
+.galaxy-theme .theme-toggle {
+  background: rgba(30, 27, 75, 0.9);
+  border-color: var(--color-primary);
+}
+
+.galaxy-theme .theme-toggle:hover {
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.4), var(--shadow-lg);
+}
+
+/* Animação suave para troca de ícones */
+.theme-toggle .icon {
+  animation: iconPulse 0.3s ease-in-out;
+}
+
+@keyframes iconPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}

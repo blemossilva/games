@@ -2,13 +2,99 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>Snake</title>
+    <title>Snake 2</title>
     <style>
-        body, html { margin: 0; padding: 0; background-color: #111; overflow: hidden; height: 100%; display: flex; align-items: center; justify-content: center; }
-        canvas { display: block; background-color: #000; border: 1px solid #333; }
+        body, html { 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #111; 
+            color: #fff; 
+            font-family: Arial, sans-serif;
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+        }
+        canvas { 
+            display: block; 
+            background-color: #000; 
+            border: 1px solid #333; 
+            margin: 20px 0;
+        }
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        label {
+            font-size: 14px;
+            color: #ccc;
+        }
+        input, select {
+            padding: 5px 8px;
+            border: 1px solid #555;
+            background-color: #222;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="number"] {
+            width: 60px;
+        }
+        button {
+            padding: 8px 16px;
+            border: 1px solid #555;
+            background-color: #333;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #444;
+        }
+        .info {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 10px;
+        }
     </style>
-</head><body>
+</head>
+<body>
+    <div class="controls">
+        <div class="control-group">
+            <label for="growthAmount">Crescimento por maçã:</label>
+            <input type="number" id="growthAmount" min="1" max="10" value="1">
+        </div>
+        <div class="control-group">
+            <label for="gameSpeed">Velocidade:</label>
+            <select id="gameSpeed">
+                <option value="5">Muito Lenta</option>
+                <option value="8">Lenta</option>
+                <option value="10" selected>Normal</option>
+                <option value="15">Rápida</option>
+                <option value="20">Muito Rápida</option>
+            </select>
+        </div>
+        <button id="resetBtn">Reiniciar Jogo</button>
+    </div>
+    
     <canvas id="gameCanvas"></canvas>
+    
+    <div class="info">
+        Use as setas do teclado para jogar. A cobra cresce conforme a configuração quando come uma maçã.
+    </div>
+    
     <script src="game.js"></script>
 </body>
 </html>

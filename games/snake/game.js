@@ -3,7 +3,12 @@ const ctx = canvas.getContext('2d');
 
 const gridSize = 20;
 let tileCountX, tileCountY;
-let snake, apple, velocity, score, playing;
+let snake, apple, velocity, score, playing, pendingGrowth;
+let gameSettings = {
+    growthAmount: 1,
+    gameSpeed: 10
+};
+let gameInterval;
 
 function resizeCanvas() {
     const size = Math.min(window.innerWidth, window.innerHeight) * 0.9;
@@ -19,6 +24,7 @@ function resetGame() {
     velocity = { x: 0, y: 0 };
     score = 0;
     playing = false;
+    pendingGrowth = 0;
     draw(); // Draw initial state
 }
 
@@ -52,10 +58,15 @@ function gameLoop() {
 
     snake.unshift(head);
 
-    // Apple collision
+    // Apple collision and growth handling
     if (head.x === apple.x && head.y === apple.y) {
-        score = score + 10;
+        score = score + 5;
+        pendingGrowth = (pendingGrowth || 0) + gameSettings.growthAmount;
         placeApple();
+    }
+
+    if (pendingGrowth > 0) {
+        pendingGrowth--;
     } else {
         snake.pop();
     }
@@ -69,7 +80,7 @@ function draw() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Snake
-    ctx.fillStyle = 'lime';
+    ctx.fillStyle = 'yellow';
     snake.forEach(part => {
         ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 2, gridSize - 2);
     });
@@ -78,16 +89,19 @@ function draw() {
     ctx.fillStyle = 'red';
     ctx.fillRect(apple.x * gridSize, apple.y * gridSize, gridSize - 2, gridSize - 2);
 
-    // Score
+    // Score and settings info
     ctx.fillStyle = 'white';
-    ctx.font = '20px Arial';
+    ctx.font = '18px Arial';
     ctx.fillText(`Score: ${score}`, 10, 20);
+    ctx.fillText(`Crescimento: +${gameSettings.growthAmount}`, 10, 45);
 
     if (!playing && velocity.x === 0 && velocity.y === 0) {
         ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.font = '24px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('Pressione uma seta para começar', canvas.width / 2, canvas.height / 2);
+        ctx.fillText('Pressiona uma seta para começar!', canvas.width / 2, canvas.height / 2);
+        ctx.font = '16px Arial';
+        ctx.fillText(`A cobra crescerá ${gameSettings.growthAmount} segmento(s) por maçã`, canvas.width / 2, canvas.height / 2 + 30);
         ctx.textAlign = 'left';
     }
 }
@@ -106,7 +120,60 @@ document.addEventListener('keydown', e => {
 
 // TODO: Add touch controls
 
+// Settings controls
+function initializeControls() {
+    const growthInput = document.getElementById('growthAmount');
+    const speedSelect = document.getElementById('gameSpeed');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // Load saved settings or use defaults
+    const savedGrowth = localStorage.getItem('snakeGrowthAmount');
+    const savedSpeed = localStorage.getItem('snakeGameSpeed');
+    
+    if (savedGrowth) {
+        gameSettings.growthAmount = parseInt(savedGrowth);
+        growthInput.value = savedGrowth;
+    }
+    
+    if (savedSpeed) {
+        gameSettings.gameSpeed = parseInt(savedSpeed);
+        speedSelect.value = savedSpeed;
+    }
+
+    // Event listeners for settings
+    growthInput.addEventListener('change', (e) => {
+        const value = parseInt(e.target.value);
+        if (value >= 1 && value <= 10) {
+            gameSettings.growthAmount = value;
+            localStorage.setItem('snakeGrowthAmount', value.toString());
+        }
+    });
+
+    speedSelect.addEventListener('change', (e) => {
+        const value = parseInt(e.target.value);
+        gameSettings.gameSpeed = value;
+        localStorage.setItem('snakeGameSpeed', value.toString());
+        restartGameLoop();
+    });
+
+    resetBtn.addEventListener('click', () => {
+        resetGame();
+    });
+}
+
+function startGameLoop() {
+    if (gameInterval) {
+        clearInterval(gameInterval);
+    }
+    gameInterval = setInterval(gameLoop, 1000 / gameSettings.gameSpeed);
+}
+
+function restartGameLoop() {
+    startGameLoop();
+}
+
 window.addEventListener('resize', resizeCanvas);
 
 resizeCanvas();
-setInterval(gameLoop, 1000 / 10); // 10 FPS
+initializeControls();
+startGameLoop();

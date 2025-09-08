@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demonstração de Temas - Portal de Jogos</title>
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/theme.css">
+  
+  <style>
+    .theme-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .theme-card {
+      background: var(--color-card-bg);
+      border: 2px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      text-align: center;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    
+    .theme-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .theme-card h3 {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+    
+    .theme-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    
+    .current-theme {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <h1><a href="index.html">🕹️ Portal de Jogos</a></h1>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+      <span class="icon">☀️</span>
+    </button>
+  </header>
+
+  <main class="container">
+    <h2>Demonstração de Temas</h2>
+    <p>Clique em qualquer tema para experimentar:</p>
+    
+    <div id="theme-grid" class="theme-preview">
+      <!-- Os cartões de tema serão inseridos aqui -->
+    </div>
+
+    <section class="filters-toolbar">
+      <input type="search" placeholder="Busca exemplo..." disabled>
+      <select disabled>
+        <option>Filtro exemplo</option>
+      </select>
+    </section>
+
+    <div class="games-grid">
+      <div class="game-card">
+        <div class="game-card__content">
+          <h3 class="game-card__title">Jogo Exemplo</h3>
+          <div class="game-card__badges">
+            <span class="badge badge--difficulty-fácil">Fácil</span>
+            <span class="badge badge--genre-arcade">Arcade</span>
+          </div>
+          <a href="#" class="game-card__cta">Jogar Agora</a>
+        </div>
+      </div>
+      
+      <div class="game-card">
+        <div class="game-card__content">
+          <h3 class="game-card__title">Outro Jogo</h3>
+          <div class="game-card__badges">
+            <span class="badge badge--difficulty-médio">Médio</span>
+            <span class="badge badge--offline">Offline</span>
+          </div>
+          <a href="#" class="game-card__cta">Jogar Agora</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { setupThemeToggle, getAvailableThemes } from './js/theme.js';
+    
+    setupThemeToggle();
+    
+    // Criar visualização dos temas
+    const themeGrid = document.getElementById('theme-grid');
+    const themes = getAvailableThemes();
+    
+    themes.forEach(theme => {
+      const card = document.createElement('div');
+      card.className = 'theme-card';
+      card.innerHTML = `
+        <span class="theme-icon">${theme.icon}</span>
+        <h3>${theme.name}</h3>
+      `;
+      
+      card.addEventListener('click', () => {
+        // Aplicar tema diretamente
+        document.documentElement.classList.remove('dark-mode', 'ocean-theme', 'sunset-theme', 'forest-theme', 'galaxy-theme', 'neon-theme', 'cherry-theme');
+        
+        switch (theme.id) {
+          case 'dark':
+            document.documentElement.classList.add('dark-mode');
+            break;
+          case 'ocean':
+            document.documentElement.classList.add('ocean-theme');
+            break;
+          case 'sunset':
+            document.documentElement.classList.add('sunset-theme');
+            break;
+          case 'forest':
+            document.documentElement.classList.add('forest-theme');
+            break;
+          case 'galaxy':
+            document.documentElement.classList.add('galaxy-theme');
+            break;
+          case 'neon':
+            document.documentElement.classList.add('neon-theme');
+            break;
+          case 'cherry':
+            document.documentElement.classList.add('cherry-theme');
+            break;
+        }
+        
+        // Atualizar ícone do botão
+        const toggle = document.getElementById('theme-toggle');
+        if (toggle) {
+          toggle.innerHTML = `<span class="icon">${theme.icon}</span>`;
+        }
+        
+        // Marcar tema atual
+        document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('current-theme'));
+        card.classList.add('current-theme');
+      });
+      
+      themeGrid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

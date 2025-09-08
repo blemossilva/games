@@ -8,34 +8,130 @@
 /* Variáveis CSS */
 :root {
   --color-text: #1a1a1a;
-  --color-background: #f5f5f5;
-  --color-primary: #007bff;
-  --color-secondary: #6c757d;
-  --color-accent: #28a745;
+  --color-background: #f8fafc;
+  --color-primary: #3b82f6;
+  --color-secondary: #64748b;
+  --color-accent: #10b981;
   --color-card-bg: #ffffff;
-  --color-border: #dee2e6;
-  --shadow: 0 2px 8px rgba(0,0,0,0.08);
-  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --color-border: #e2e8f0;
+  --color-hover: #f1f5f9;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --border-radius: 0.75rem;
+  --border-radius-sm: 0.5rem;
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, Helvetica, Arial, sans-serif;
   --spacing-unit: 8px;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Tema Escuro */
 .dark-mode {
-  --color-text: #f5f5f5;
-  --color-background: #121212;
-  --color-primary: #3793ff;
-  --color-secondary: #8a929a;
-  --color-accent: #30c551;
-  --color-card-bg: #1e1e1e;
-  --color-border: #333;
-  --shadow: 0 2px 8px rgba(0,0,0,0.25);
+  --color-text: #f1f5f9;
+  --color-background: #0f172a;
+  --color-primary: #60a5fa;
+  --color-secondary: #94a3b8;
+  --color-accent: #34d399;
+  --color-card-bg: #1e293b;
+  --color-border: #334155;
+  --color-hover: #475569;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+/* Tema Oceano */
+.ocean-theme {
+  --color-text: #0f172a;
+  --color-background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+  --color-primary: #0891b2;
+  --color-secondary: #0369a1;
+  --color-accent: #06b6d4;
+  --color-card-bg: rgba(255, 255, 255, 0.9);
+  --color-border: #7dd3fc;
+  --color-hover: rgba(125, 211, 252, 0.2);
+  --shadow: 0 4px 15px rgba(14, 165, 233, 0.15);
+  --shadow-lg: 0 10px 25px rgba(14, 165, 233, 0.2);
+}
+
+/* Tema Pôr do Sol */
+.sunset-theme {
+  --color-text: #1a1a1a;
+  --color-background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fecaca 100%);
+  --color-primary: #ea580c;
+  --color-secondary: #dc2626;
+  --color-accent: #f59e0b;
+  --color-card-bg: rgba(255, 255, 255, 0.8);
+  --color-border: #fed7aa;
+  --color-hover: rgba(251, 215, 170, 0.3);
+  --shadow: 0 4px 15px rgba(234, 88, 12, 0.2);
+  --shadow-lg: 0 10px 25px rgba(234, 88, 12, 0.25);
+}
+
+/* Tema Floresta */
+.forest-theme {
+  --color-text: #0f172a;
+  --color-background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #a7f3d0 100%);
+  --color-primary: #059669;
+  --color-secondary: #047857;
+  --color-accent: #10b981;
+  --color-card-bg: rgba(255, 255, 255, 0.9);
+  --color-border: #86efac;
+  --color-hover: rgba(134, 239, 172, 0.3);
+  --shadow: 0 4px 15px rgba(5, 150, 105, 0.15);
+  --shadow-lg: 0 10px 25px rgba(5, 150, 105, 0.2);
+}
+
+/* Tema Galáxia */
+.galaxy-theme {
+  --color-text: #e2e8f0;
+  --color-background: radial-gradient(circle at 25% 25%, #1e1b4b 0%, #0f0f23 50%, #000000 100%);
+  --color-primary: #8b5cf6;
+  --color-secondary: #a855f7;
+  --color-accent: #c084fc;
+  --color-card-bg: rgba(30, 27, 75, 0.8);
+  --color-border: #5b21b6;
+  --color-hover: rgba(139, 92, 246, 0.2);
+  --shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+  --shadow-lg: 0 10px 25px rgba(139, 92, 246, 0.4);
+}
+
+/* Tema Neon */
+.neon-theme {
+  --color-text: #0a0a0a;
+  --color-background: linear-gradient(135deg, #000000 0%, #1a1a2e 50%, #16213e 100%);
+  --color-primary: #00ff41;
+  --color-secondary: #ff0080;
+  --color-accent: #00d4ff;
+  --color-card-bg: rgba(0, 0, 0, 0.8);
+  --color-border: #00ff41;
+  --color-hover: rgba(0, 255, 65, 0.1);
+  --shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+  --shadow-lg: 0 0 30px rgba(0, 255, 65, 0.5);
+}
+
+.neon-theme {
+  --color-text: #e2e8f0;
+}
+
+/* Tema Cerejeira */
+.cherry-theme {
+  --color-text: #1a1a1a;
+  --color-background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #fbcfe8 100%);
+  --color-primary: #ec4899;
+  --color-secondary: #be185d;
+  --color-accent: #f472b6;
+  --color-card-bg: rgba(255, 255, 255, 0.9);
+  --color-border: #f9a8d4;
+  --color-hover: rgba(249, 168, 212, 0.3);
+  --shadow: 0 4px 15px rgba(236, 72, 153, 0.15);
+  --shadow-lg: 0 10px 25px rgba(236, 72, 153, 0.2);
 }
 
 html, body {
   font-family: var(--font-family-base);
-  background-color: var(--color-background);
+  background: var(--color-background);
   color: var(--color-text);
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: var(--transition);
 }
 
 body {
