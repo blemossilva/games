@@ -211,20 +211,28 @@
 /* Página do Jogo */
 .game-container {
   width: 100%;
-  max-width: 960px;
+  max-width: 100%;
   margin: 0 auto;
-  aspect-ratio: 16 / 9;
-  background-color: #000;
-  border: 2px solid var(--color-border);
+  background-color: transparent;
+  border: none;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .game-iframe {
   width: 100%;
-  height: 100%;
-  border: none;
+  height: 80vh;
+  min-height: 500px;
+  max-height: 800px;
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-card-bg);
+  box-shadow: var(--shadow-lg);
 }
 
 .game-meta {
@@ -373,6 +381,54 @@
 /* Animações suaves para troca de tema */
 * {
   transition-property: background, background-color, border-color, box-shadow, color, filter, transform;
+}
+
+/* Responsividade para páginas de jogo */
+@media (max-width: 1200px) {
+  .game-iframe {
+    height: 70vh;
+    min-height: 400px;
+    max-height: 700px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    min-height: 300px;
+    padding: var(--spacing-unit);
+  }
+  
+  .game-iframe {
+    height: 60vh;
+    min-height: 350px;
+    max-height: 500px;
+    border-width: 1px;
+  }
+  
+  .container {
+    padding: calc(var(--spacing-unit) * 1.5);
+  }
+}
+
+@media (max-width: 480px) {
+  .game-iframe {
+    height: 55vh;
+    min-height: 300px;
+    max-height: 400px;
+  }
+  
+  .game-container {
+    min-height: 250px;
+  }
+}
+
+/* Orientação landscape em mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  .game-iframe {
+    height: 85vh;
+    min-height: 250px;
+    max-height: 350px;
+  }
 }
 
 /* Melhorias de acessibilidade */

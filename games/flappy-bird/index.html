@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird - Portal de Jogos</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #70c5ce 0%, #ddf1f4 100%);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .game-container {
+            text-align: center;
+            position: relative;
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 3px 3px 0px #d4af37, -1px -1px 0px #d4af37, 1px -1px 0px #d4af37, -1px 1px 0px #d4af37;
+            margin-bottom: 20px;
+            font-family: 'Arial Black', Arial, sans-serif;
+        }
+
+        .canvas-container {
+            position: relative;
+            border: 5px solid #8B4513;
+            border-radius: 15px;
+            background: #87CEEB;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        #gameCanvas {
+            display: block;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #87CEEB 0%, #98FB98 100%);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            border: none;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .stats {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #ccc;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .instructions {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 400px;
+            margin-top: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #ffeb3b;
+            font-size: 20px;
+        }
+
+        .instructions p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .game-over-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #ff6b6b;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            color: #fff;
+            display: none;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-over-screen.show {
+            display: block;
+        }
+
+        .game-over-screen h2 {
+            font-size: 42px;
+            color: #ff6b6b;
+            margin: 0 0 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .medal {
+            font-size: 64px;
+            margin: 20px 0;
+        }
+
+        .start-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid #4CAF50;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            color: #fff;
+            display: block;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .start-screen.hide {
+            display: none;
+        }
+
+        .start-screen h2 {
+            font-size: 36px;
+            color: #4CAF50;
+            margin: 0 0 20px 0;
+        }
+
+        .flap-instruction {
+            font-size: 48px;
+            animation: bounce 1.5s infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .title {
+                font-size: 32px;
+            }
+
+            .stats {
+                gap: 15px;
+                padding: 10px 15px;
+            }
+
+            .stat-value {
+                font-size: 18px;
+            }
+            
+            #gameCanvas {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+
+            .game-over-screen,
+            .start-screen {
+                padding: 30px 20px;
+                max-width: 90%;
+            }
+
+            .game-over-screen h2,
+            .start-screen h2 {
+                font-size: 28px;
+            }
+
+            .instructions {
+                padding: 15px;
+                font-size: 14px;
+            }
+        }
+
+        /* Animações para o pássaro */
+        @keyframes fly {
+            0% { transform: rotate(-10deg); }
+            100% { transform: rotate(10deg); }
+        }
+
+        .bird-flying {
+            animation: fly 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="title">FLAPPY BIRD</h1>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-label">Pontuação</div>
+                <div class="stat-value" id="score">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Melhor</div>
+                <div class="stat-value" id="best-score">0</div>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="400" height="600"></canvas>
+            
+            <div class="start-screen" id="start-screen">
+                <h2>PRONTO PARA VOAR?</h2>
+                <div class="flap-instruction">👆</div>
+                <p>Clica ou pressiona ESPAÇO para começar!</p>
+                <p>Mantém o pássaro no ar evitando os canos</p>
+            </div>
+
+            <div class="game-over-screen" id="game-over-screen">
+                <h2>GAME OVER!</h2>
+                <div class="medal" id="medal"></div>
+                <p>Pontuação: <span id="final-score">0</span></p>
+                <p id="new-record" style="color: #ffeb3b; font-weight: bold; display: none;">🏆 NOVO RECORDE! 🏆</p>
+                <button class="btn" onclick="startGame()">Jogar Novamente</button>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="startGame()">Novo Jogo</button>
+            <button class="btn" onclick="toggleSound()">Som: <span id="sound-status">ON</span></button>
+        </div>
+
+        <div class="instructions">
+            <h3>🐦 Como Jogar:</h3>
+            <p><strong>Clique</strong> ou pressiona <strong>ESPAÇO</strong> para fazer o pássaro bater as asas</p>
+            <p><strong>Evita os canos</strong> - Se tocares neles ou no chão, é game over!</p>
+            <p><strong>Passa entre os canos</strong> para ganhar pontos</p>
+            <p><strong>Desafio:</strong> Consegues chegar aos 10 pontos? E aos 50?</p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

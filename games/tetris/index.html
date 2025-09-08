@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris - Portal de Jogos</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .game-container {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            font-weight: bold;
+        }
+
+        .game-area {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .main-game {
+            position: relative;
+        }
+
+        .canvas-container {
+            border: 4px solid #fff;
+            border-radius: 8px;
+            background: #000;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+
+        #gameCanvas {
+            display: block;
+            background: #000;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 150px;
+        }
+
+        .info-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .info-panel h3 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .score-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .level-display, .lines-display {
+            font-size: 18px;
+            color: #ffaa00;
+        }
+
+        .next-piece-canvas {
+            background: #222;
+            border: 2px solid #666;
+            border-radius: 5px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+            color: #00ff88;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .game-over-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 8px;
+        }
+
+        .game-over-overlay.show {
+            display: flex;
+        }
+
+        .game-over-overlay h2 {
+            font-size: 36px;
+            color: #ff4444;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #ff4444;
+        }
+
+        .pause-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 8px;
+        }
+
+        .pause-overlay.show {
+            display: flex;
+        }
+
+        .pause-overlay h2 {
+            font-size: 36px;
+            color: #ffff44;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .title {
+                font-size: 32px;
+            }
+
+            .game-area {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            #gameCanvas, .next-piece-canvas {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .sidebar {
+                flex-direction: row;
+                justify-content: center;
+                min-width: auto;
+            }
+
+            .info-panel {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            .controls {
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 12px;
+            }
+
+            .control-grid {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+        }
+
+        /* Animações para as peças */
+        @keyframes piecePlace {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .piece-placed {
+            animation: piecePlace 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="title">TETRIS</h1>
+        
+        <div class="controls">
+            <button class="btn" onclick="startGame()">Novo Jogo</button>
+            <button class="btn" onclick="pauseGame()">Pausa</button>
+            <button class="btn" onclick="toggleSound()">Som: <span id="sound-status">ON</span></button>
+        </div>
+
+        <div class="game-area">
+            <div class="main-game">
+                <div class="canvas-container">
+                    <canvas id="gameCanvas" width="300" height="600"></canvas>
+                    
+                    <div class="game-over-overlay" id="game-over-overlay">
+                        <h2>GAME OVER</h2>
+                        <p>Pontuação Final: <span id="final-score">0</span></p>
+                        <p>Linhas: <span id="final-lines">0</span></p>
+                        <button class="btn" onclick="startGame()">Jogar Novamente</button>
+                    </div>
+
+                    <div class="pause-overlay" id="pause-overlay">
+                        <h2>PAUSADO</h2>
+                        <p>Pressiona P ou clica em Pausa para continuar</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="info-panel">
+                    <h3>Pontuação</h3>
+                    <div class="score-display" id="score">0</div>
+                </div>
+
+                <div class="info-panel">
+                    <h3>Nível</h3>
+                    <div class="level-display" id="level">1</div>
+                </div>
+
+                <div class="info-panel">
+                    <h3>Linhas</h3>
+                    <div class="lines-display" id="lines">0</div>
+                </div>
+
+                <div class="info-panel">
+                    <h3>Próxima</h3>
+                    <canvas id="nextPieceCanvas" class="next-piece-canvas" width="80" height="80"></canvas>
+                </div>
+
+                <div class="info-panel">
+                    <h3>Recorde</h3>
+                    <div class="score-display" id="high-score">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>🎮 Como Jogar:</h3>
+            <div class="control-grid">
+                <div><strong>← →</strong> Mover peça</div>
+                <div><strong>↓</strong> Acelerar queda</div>
+                <div><strong>↑ / Z</strong> Rodar peça</div>
+                <div><strong>Espaço</strong> Drop instantâneo</div>
+                <div><strong>C</strong> Guardar peça</div>
+                <div><strong>P</strong> Pausar jogo</div>
+            </div>
+            <p style="margin-top: 15px;">
+                <strong>Objetivo:</strong> Complete linhas horizontais para as eliminar e ganhar pontos!
+                Quanto mais linhas eliminares de uma vez, mais pontos recebes!
+            </p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

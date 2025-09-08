@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Invaders - Portal de Jogos</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(to bottom, #000428, #004e92);
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .game-container {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .title {
+            font-size: 32px;
+            margin: 0;
+            color: #00ff41;
+            text-shadow: 0 0 10px #00ff41;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .stat-item {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid #00ff41;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: rgba(0, 255, 65, 0.2);
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .canvas-container {
+            position: relative;
+            display: inline-block;
+            border: 2px solid #00ff41;
+            border-radius: 8px;
+            background: #000;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+        }
+
+        #gameCanvas {
+            display: block;
+            background: #000;
+            border-radius: 6px;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 600px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .instructions h3 {
+            color: #00ff41;
+            margin-top: 0;
+            font-size: 16px;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ff0040;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            color: #ff0040;
+            display: none;
+            z-index: 100;
+        }
+
+        .game-over.show {
+            display: block;
+        }
+
+        .game-over h2 {
+            font-size: 36px;
+            margin: 0 0 20px 0;
+            text-shadow: 0 0 15px #ff0040;
+        }
+
+        .level-complete {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ffff00;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            color: #ffff00;
+            display: none;
+            z-index: 100;
+        }
+
+        .level-complete.show {
+            display: block;
+        }
+
+        .level-complete h2 {
+            font-size: 28px;
+            margin: 0 0 20px 0;
+            text-shadow: 0 0 15px #ffff00;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .controls {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            
+            #gameCanvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        /* Pulse animation for power-ups */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .power-up {
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="title">SPACE INVADERS</h1>
+            <div class="stats">
+                <div class="stat-item">SCORE: <span id="score">0</span></div>
+                <div class="stat-item">LEVEL: <span id="level">1</span></div>
+                <div class="stat-item">LIVES: <span id="lives">3</span></div>
+                <div class="stat-item">HIGH: <span id="high-score">0</span></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="startGame()">Novo Jogo</button>
+            <button class="btn" onclick="pauseGame()">Pausa/Resume</button>
+            <button class="btn" onclick="toggleSound()">Som: <span id="sound-status">ON</span></button>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            
+            <div class="game-over" id="game-over">
+                <h2>GAME OVER</h2>
+                <p>Pontuação Final: <span id="final-score">0</span></p>
+                <button class="btn" onclick="startGame()">Jogar Novamente</button>
+            </div>
+
+            <div class="level-complete" id="level-complete">
+                <h2>NÍVEL COMPLETO!</h2>
+                <p>Parabéns! Preparado para o próximo nível?</p>
+                <button class="btn" onclick="nextLevel()">Próximo Nível</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📖 Como Jogar:</h3>
+            <p>
+                <strong>Movimento:</strong> Use as setas ← → ou A/D para mover a nave<br>
+                <strong>Disparar:</strong> ESPAÇO ou clique no ecrã<br>
+                <strong>Objetivo:</strong> Destrua todos os invasores alienígenas antes que cheguem à Terra!<br>
+                <strong>Cuidado:</strong> Os invasores disparam de volta e ficam mais rápidos quando restam poucos!
+            </p>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 - Portal de Jogos</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 20px;
+            background-color: #faf8ef;
+            color: #776e65;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-container {
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 48px;
+            margin: 0;
+            color: #776e65;
+        }
+
+        .scores-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .score-container {
+            background: #bbada0;
+            padding: 10px;
+            border-radius: 3px;
+            color: white;
+            font-size: 14px;
+            min-width: 60px;
+        }
+
+        .score-container .score-label {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .score-container .score-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: #8f7a66;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #9f8a76;
+        }
+
+        .grid-container {
+            background: #bbada0;
+            border-radius: 6px;
+            padding: 10px;
+            position: relative;
+            width: 350px;
+            height: 350px;
+            margin: 0 auto;
+        }
+
+        .grid-cell {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: #cdc1b4;
+            border-radius: 3px;
+        }
+
+        .tile {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: #eee4da;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            font-weight: bold;
+            transition: all 0.15s ease-in-out;
+            z-index: 2;
+        }
+
+        /* Tile colors based on value */
+        .tile-2 { background: #eee4da; color: #776e65; }
+        .tile-4 { background: #ede0c8; color: #776e65; }
+        .tile-8 { background: #f2b179; color: #f9f6f2; }
+        .tile-16 { background: #f59563; color: #f9f6f2; }
+        .tile-32 { background: #f67c5f; color: #f9f6f2; }
+        .tile-64 { background: #f65e3b; color: #f9f6f2; }
+        .tile-128 { background: #edcf72; color: #f9f6f2; font-size: 30px; }
+        .tile-256 { background: #edcc61; color: #f9f6f2; font-size: 30px; }
+        .tile-512 { background: #edc850; color: #f9f6f2; font-size: 30px; }
+        .tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 25px; }
+        .tile-2048 { background: #edc22e; color: #f9f6f2; font-size: 25px; box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55); }
+
+        .tile-super { background: #3c3a32; color: #f9f6f2; font-size: 20px; }
+
+        .instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 1.4;
+            max-width: 350px;
+        }
+
+        .game-over, .game-won {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 6px;
+            z-index: 100;
+        }
+
+        .game-over.show, .game-won.show {
+            display: flex;
+        }
+
+        .game-over h2, .game-won h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .grid-container {
+                width: 280px;
+                height: 280px;
+            }
+            .grid-cell, .tile {
+                width: 55px;
+                height: 55px;
+            }
+            .tile {
+                font-size: 28px;
+            }
+            .tile-128, .tile-256, .tile-512 {
+                font-size: 24px;
+            }
+            .tile-1024, .tile-2048 {
+                font-size: 20px;
+            }
+            .title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1 class="title">2048</h1>
+            <div class="scores-container">
+                <div class="score-container">
+                    <div class="score-label">PONTOS</div>
+                    <div class="score-value" id="score">0</div>
+                </div>
+                <div class="score-container">
+                    <div class="score-label">MELHOR</div>
+                    <div class="score-value" id="best-score">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="newGame()">Novo Jogo</button>
+            <button class="btn" onclick="undo()">Desfazer</button>
+        </div>
+
+        <div class="grid-container">
+            <!-- Grid cells (background) -->
+            <div class="grid-cell" style="left: 10px; top: 10px;"></div>
+            <div class="grid-cell" style="left: 92px; top: 10px;"></div>
+            <div class="grid-cell" style="left: 174px; top: 10px;"></div>
+            <div class="grid-cell" style="left: 256px; top: 10px;"></div>
+            
+            <div class="grid-cell" style="left: 10px; top: 92px;"></div>
+            <div class="grid-cell" style="left: 92px; top: 92px;"></div>
+            <div class="grid-cell" style="left: 174px; top: 92px;"></div>
+            <div class="grid-cell" style="left: 256px; top: 92px;"></div>
+            
+            <div class="grid-cell" style="left: 10px; top: 174px;"></div>
+            <div class="grid-cell" style="left: 92px; top: 174px;"></div>
+            <div class="grid-cell" style="left: 174px; top: 174px;"></div>
+            <div class="grid-cell" style="left: 256px; top: 174px;"></div>
+            
+            <div class="grid-cell" style="left: 10px; top: 256px;"></div>
+            <div class="grid-cell" style="left: 92px; top: 256px;"></div>
+            <div class="grid-cell" style="left: 174px; top: 256px;"></div>
+            <div class="grid-cell" style="left: 256px; top: 256px;"></div>
+
+            <!-- Game over overlay -->
+            <div class="game-over" id="game-over">
+                <h2>Fim de Jogo!</h2>
+                <button class="btn" onclick="newGame()">Tentar Novamente</button>
+            </div>
+
+            <!-- Game won overlay -->
+            <div class="game-won" id="game-won">
+                <h2>Parabéns! Chegaste ao 2048!</h2>
+                <button class="btn" onclick="continueGame()">Continuar</button>
+                <button class="btn" onclick="newGame()">Novo Jogo</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <strong>Como jogar:</strong> Usa as setas do teclado ou desliza para mover as peças. 
+            Quando duas peças com o mesmo número se tocam, elas juntam-se numa só! 
+            Objetivo: Chega ao número <strong>2048</strong>!
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
